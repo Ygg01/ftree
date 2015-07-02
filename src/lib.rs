@@ -1,5 +1,8 @@
 use std::convert::From;
 
+use self::Node::*;
+use self::Affix::*;
+
 #[derive(Debug)]
 pub enum Node<A> {
     Branch2([A;2]),
@@ -9,21 +12,21 @@ pub enum Node<A> {
 impl<A> Node<A> {
     fn to_list(&self) -> &[A] {
         match self {
-            &Node::Branch2(ref x) => x,
-            &Node::Branch3(ref x) => x,
+            &Branch2(ref x) => x,
+            &Branch3(ref x) => x,
         }
     }
 }
 
 impl<A> From<[A; 2]> for Node<A> {
     fn from(input: [A; 2]) -> Node<A> {
-        Node::Branch2(input)
+        Branch2(input)
     }
 }
 
 impl<A> From<[A; 3]> for Node<A> {
     fn from(input: [A; 3]) -> Node<A> {
-        Node::Branch3(input)
+        Branch3(input)
     }
 }
 
@@ -38,35 +41,35 @@ pub enum Affix<A> {
 impl<A> Affix<A> {
     fn to_list(&self) -> &[A] {
         match self {
-            &Affix::Affix1(ref x) => x,
-            &Affix::Affix2(ref x) => x,
-            &Affix::Affix3(ref x) => x,
-            &Affix::Affix4(ref x) => x,
+            &Affix1(ref x) => x,
+            &Affix2(ref x) => x,
+            &Affix3(ref x) => x,
+            &Affix4(ref x) => x,
         }
     }
 }
 
 impl<A> From<[A; 1]> for Affix<A> {
     fn from(input: [A; 1]) -> Affix<A> {
-        Affix::Affix1(input)
+        Affix1(input)
     }
 }
 
 impl<A> From<[A; 2]> for Affix<A> {
     fn from(input: [A; 2]) -> Affix<A> {
-        Affix::Affix2(input)
+        Affix2(input)
     }
 }
 
 impl<A> From<[A; 3]> for Affix<A> {
     fn from(input: [A; 3]) -> Affix<A> {
-        Affix::Affix3(input)
+        Affix3(input)
     }
 }
 
 impl<A> From<[A; 4]> for Affix<A> {
     fn from(input: [A; 4]) -> Affix<A> {
-        Affix::Affix4(input)
+        Affix4(input)
     }
 }
 
