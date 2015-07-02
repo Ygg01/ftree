@@ -73,7 +73,25 @@ impl<A> From<[A; 4]> for Affix<A> {
     }
 }
 
-//TODO append/prepend
+impl<A:Clone> Affix<A> {
+    fn push_front(&mut self, value: A)  {
+        *self = match self {
+            &mut Affix1(ref b) => Affix2([value, b[0].clone()]),
+            &mut Affix2(ref b) => Affix3([value, b[0].clone(), b[1].clone()]),
+            &mut Affix3(ref b) => Affix4([value, b[0].clone(), b[1].clone(), b[2].clone()]),
+            &mut Affix4(_) => panic!("Can't append to Affix4"),
+        };
+    }
+    
+    fn push_back(&mut self, value: A)  {
+        *self = match self {
+            &mut Affix1(ref b) => Affix2([b[0].clone(), value]),
+            &mut Affix2(ref b) => Affix3([b[0].clone(), b[1].clone(), value]),
+            &mut Affix3(ref b) => Affix4([b[0].clone(), b[1].clone(), b[2].clone(), value]),
+            &mut Affix4(_) => panic!("Can't append to Affix4"),
+        };
+    }
+}
 
 
 pub enum FingerTree<A> {
