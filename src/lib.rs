@@ -2,11 +2,21 @@ use std::convert::From;
 
 use self::Node::*;
 use self::Affix::*;
+use self::FingerTree::*;
 
 #[derive(Debug)]
 pub enum Node<A> {
     Branch2([A;2]),
     Branch3([A;3]),
+}
+
+impl<A:Clone> Clone for Node<A> {
+    fn clone(&self) -> Node<A> {
+        match self {
+            &Branch2(ref b) => Branch2([b[0].clone(), b[1].clone()]),
+            &Branch3(ref b) => Branch3([b[0].clone(), b[1].clone(), b[2].clone()]),
+        }
+    }
 }
 
 impl<A> Node<A> {
@@ -82,7 +92,7 @@ impl<A:Clone> Affix<A> {
             &mut Affix4(_) => panic!("Can't append to Affix4"),
         };
     }
-    
+
     fn push_back(&mut self, value: A)  {
         *self = match self {
             &mut Affix1(ref b) => Affix2([b[0].clone(), value]),
