@@ -103,19 +103,24 @@ impl<A:Clone> Affix<A> {
     }
 }
 
+pub struct AffixData<A> {
+    prefix: Affix<A>,
+    suffix: Affix<A>,
+}
 
 pub enum FingerTree<A> {
     Empty,
     Single(A),
-    Deep(DeepTree<A>),
+    DeepTwo{
+        data: AffixData<A>,
+        children: Option<Box<(FingerTree<A>, FingerTree<A>)>>,
+    },
+    DeepThree{
+        data: AffixData<A>,
+        children: Option<Box<(FingerTree<A>, FingerTree<A>, FingerTree<A>)>>,
+    },
 }
 
-
-pub struct DeepTree<A> {
-    prefix: Affix<A>,
-    deeper: Box<FingerTree<Node<A>>>,
-    suffix: Affix<A>,
-}
 /*
 #[test]
 fn it_works() {
